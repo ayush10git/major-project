@@ -1,38 +1,257 @@
-.App {
+/* Importing fonts from Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+/* Styling for main headings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 30px;
   text-align: center;
+  font-family: "Faculty Glyphic", sans-serif;
+  font-weight: 700;
+  font-style: normal;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Styling for text spans */
+span {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding-top: 25px;
+  align-items: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+h1 {
+  font-size: 36px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  color: #333;
+}
+
+.search-container {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.search-bar:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 8px rgba(0, 86, 179, 0.2);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.tab {
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.tab:hover {
+  transform: scale(1.05);
+}
+
+.tab img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.loader {
+  margin-left: 720px;
+  margin-top: 300px;
+}
+
+span {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.no-results {
+  font-size: 18px;
+  font-family: "Roboto", sans-serif;
+  color: #888;
+}
+
+/* Styling for content displayed below the tabs */
+.content {
+  margin-top: 20px; /* Adds spacing between tabs and content */
+  font-size: 18px; /* Sets font size for the content */
+}
+
+.main {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+}
+
+.truck-details {
+  font-family: Arial, sans-serif;
+  width: 40%;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.truck-details h1 {
+  text-align: center;
+  color: #333;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.truck-details p {
+  font-size: 1rem;
+  color: #555;
+  margin: 8px 0;
+}
+
+.modern-btn {
+  width: 100%;
+  padding: 8px 15px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #6e7dff, #3a56cc);
   color: white;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+/* Button hover effect */
+.modern-btn:hover {
+  background: linear-gradient(135deg, #3a56cc, #6e7dff);
+  transform: translateY(-3px);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Button active effect */
+.modern-btn:active {
+  background: linear-gradient(135deg, #3a56cc, #6e7dff);
+  transform: translateY(1px);
+}
+
+/* Button focus effect */
+.modern-btn:focus {
+  box-shadow: 0 0 0 4px rgba(58, 86, 204, 0.2);
+}
+
+.truck-details div {
+  margin-top: 20px;
+}
+
+.truck-details h2 {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.modern-input-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.modern-input {
+  width: 100%;
+  padding: 14px 20px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 30px;
+  background-color: #f8f9fa;
+  color: #333;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.modern-input::placeholder {
+  color: #aaa;
+  font-weight: 400;
+}
+
+/* Focus state */
+.modern-input:focus {
+  border-color: #3a56cc;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(58, 86, 204, 0.2);
+}
+
+/* Label animation */
+.modern-input-label {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #888;
+  font-weight: 500;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.modern-input:focus + .modern-input-label,
+.modern-input:not(:placeholder-shown) + .modern-input-label {
+  top: -10px;
+  font-size: 12px;
+  color: #3a56cc;
+}
+
+.truck-details p span {
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .truck-details {
+    padding: 15px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .truck-details h1 {
+    font-size: 1.5rem;
+  }
+
+  .truck-details p,
+  .truck-details input,
+  .truck-details button {
+    font-size: 0.9rem;
   }
 }
