@@ -1,8 +1,7 @@
 import { get, ref, update, onValue } from "firebase/database";
-import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import { db } from "./firebase";
-
 import { BeatLoader } from "react-spinners";
 
 function TruckDetails() {
@@ -14,10 +13,9 @@ function TruckDetails() {
   const [qLoad, setQLoad] = useState(""); // Load input field (kg)
   const [qLoaded, setQLoaded] = useState(0); // Confirmed load value (kg)
   const intervalRef = useRef(null);
+  const [tkphThreshold, setTkphThreshold] = useState(50);
+  const [previousTkphThreshold, setPreviousTkphThreshold] = useState(50);
   const Q_empty = 9000; // Fixed empty load (kg)
-  let tkphThreshold = 50;
-
-  console.log(backgroundImage);
 
   useEffect(() => {
     const truckRef = ref(db, `Truck ${id}`);
@@ -44,6 +42,34 @@ function TruckDetails() {
       stopTimer();
     };
   }, [id]);
+
+  useEffect(() => {
+    if (truckData) {
+      const calculateTkphThreshold = () => {
+        let newThreshold = 50; // Base threshold
+        const temperature = truckData.Temperature;
+
+        if (temperature > 38) {
+          const tempDifference = temperature - 38;
+          newThreshold -= tempDifference * 0.02 * newThreshold; // Decrease by 2% per degree above 38
+        } else if (temperature < 38) {
+          const tempDifference = 38 - temperature;
+          newThreshold += tempDifference * 0.01 * newThreshold; // Increase by 1% per degree below 38
+        }
+
+        return newThreshold;
+      };
+
+      const newTkphThreshold = calculateTkphThreshold();
+
+      // Update only if there's a meaningful change
+      if (newTkphThreshold !== previousTkphThreshold) {
+        setPreviousTkphThreshold(newTkphThreshold);
+        setTkphThreshold(newTkphThreshold);
+        alert(`TKPH Threshold updated to: ${newTkphThreshold.toFixed(2)}`);
+      }
+    }
+  }, [truckData?.Temperature, previousTkphThreshold]); // Runs only when Temperature or previous threshold changes
 
   const startTimer = () => {
     if (intervalRef.current !== null) return;
@@ -136,17 +162,6 @@ function TruckDetails() {
     return <BeatLoader className="loader" />;
   }
 
-  if (truckData.Pressure < 600) {
-    alert("Presure is Low");
-  }
-
-  if (truckData.Temperature > 27) {
-    let tempDifference = truckData.Temperature - 27;
-    for (let i = 1; i <= tempDifference; i++) {
-      tkphThreshold -= 0.02 * tkphThreshold; // Decrease by 2% for each degree
-    }
-  }
-
   return (
     <div
       className="main"
@@ -201,9 +216,6 @@ function TruckDetails() {
             )}
             <p style={{ fontSize: "18px", fontWeight: 700 }}>
               TKPH Threshold: {tkphThreshold.toFixed(2)}
-            </p>
-            <p style={{ fontSize: "18px", fontWeight: 700 }}>
-              Actual TKPH: 50.00
             </p>
           </div>
         </div>
